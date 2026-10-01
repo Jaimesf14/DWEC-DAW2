@@ -18,6 +18,106 @@
             "precioBase":"35",
             "estadoConservacion": "usado-como-nuevo",
             "Stock": 5 
+        },
+
+        {
+            "id": 3,
+            "titulo": "Sonic the Hedgehog 2",
+            "plataforma": "MEGA DRIVE",
+            "categoria": "Plataformas",
+            "precioBase":"20",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 4,
+            "titulo": "Streets of Rage 2",
+            "plataforma": "MEGA DRIVE",
+            "categoria": "Lucha",
+            "precioBase":"22",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 5,
+            "titulo": "Final Fantasy VII",
+            "plataforma": "PS1",
+            "categoria": "RPG",
+            "precioBase":"40",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 6,
+            "titulo": "Gran Turismo",
+            "plataforma": "PS1",
+            "categoria": "Deportes",
+            "precioBase":"18",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 7,
+            "titulo": "Crash Bandicoot",
+            "plataforma": "PS1",
+            "categoria": "Plataformas",
+            "precioBase":"30",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 8,
+            "titulo": "Super Mario 64",
+            "plataforma": "N64",
+            "categoria": "Plataformas",
+            "precioBase":"35",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 9,
+            "titulo": "Mario Kart 64",
+            "plataforma": "N64",
+            "categoria": "Deportes",
+            "precioBase":"32",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 10,
+            "titulo": "Pokémon Rojo",
+            "plataforma": "GAME BOY",
+            "categoria": "RPG",
+            "precioBase":"45",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 11,
+            "titulo": "Tetris",
+            "plataforma": "GAME BOY",
+            "categoria": "Puzzle",
+            "precioBase":"15",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
+        },
+
+        {
+            "id": 12,
+            "titulo": "The Legend of Zelda: Link's Awakening",
+            "plataforma": "GAME BOY",
+            "categoria": "Aventura",
+            "precioBase":"38",
+            "estadoConservacion": "usado-como-nuevo",
+            "Stock": 5 
         }
         
     ]
