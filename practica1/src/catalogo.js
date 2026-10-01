@@ -14,3 +14,31 @@ const catalogo = [
 
 ];
 
+
+
+function verCatalogo(catalogo){
+   catalogo.forEach(juego => {
+    console.log(`Id: ${juego.id} | Nombre: ${juego.titulo}`)
+   });
+
+}
+verCatalogo(catalogo);
+
+
+function filtrarCategoria(){
+   const catalogoFiltrado = catalogo.filter((juego) => juego.categoria === "RPG"); 
+   catalogoFiltrado.forEach(juego => {
+    console.log(`Id: ${juego.id} | Nombre: ${juego.titulo} | Nombre: ${juego.categoria}`)
+    
+   });
+}   
+
+filtrarCategoria();
+
+
+/*const catalogoCompleto = catalogo.map((juego) => ({
+    value: juego.id,
+    label: juego.titulo
+    
+}));
+*/
