@@ -13,3 +13,5 @@ const catalogo = [
     {id: 12, titulo: "The Legend of Zelda: Link's Awakening", plataforma: "GAME BOY", categoria: "Aventura", precioBase:38, estadoConservacion: "nuevo-precintado", stock: 5 },
 
 ];
+
+export {catalogo};
