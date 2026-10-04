@@ -13,7 +13,6 @@ function buscarProducto(){
     
 }
 
-buscarProducto();
 
 
 export {buscarProducto}
