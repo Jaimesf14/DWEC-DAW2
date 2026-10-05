@@ -60,14 +60,9 @@ document.querySelector('#app').innerHTML = `
 setupCounter(document.querySelector('#counter'))
 
 //---------------------------------------------------------------------------------
-//import {verCatalogo, filtrarCategoria, filtrarPorStockBajo } from './logic/verCatalogo.js';
-//import { buscarProducto } from './logic/gestionProductos.js';
-import { menuCatalogo } from './ui/submenuCatalogo.js';
-//menuCatalogo();
-import { catalogo } from './model/catalogo.js';
-import { registrarVenta } from './logic/venta.js';
 
-let catalogoActual = catalogo;
-catalogoActual = registrarVenta(catalogoActual);
+import { menu } from './ui/menu.js'
+menu();
+
 
 

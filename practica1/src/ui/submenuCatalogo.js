@@ -1,4 +1,5 @@
 import { filtrarCategoria, filtrarPorStockBajo, verCatalogo } from "../logic/verCatalogo";
+import { menu } from "./menu";
 
 function menuCatalogo() {
     let eleccion;
@@ -28,7 +29,8 @@ function menuCatalogo() {
                 filtrarPorStockBajo();
                 break;
             case 4:
-                return;
+                menu();
+                break;
             case 5:
                 break;
             default:
