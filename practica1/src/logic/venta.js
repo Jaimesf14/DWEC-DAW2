@@ -13,7 +13,7 @@ function registrarVenta(catalogoActual){
     const producto = buscarProducto(id);
     if (!producto || Number.isNaN(id)) {
         console.log("El id seleccionado no existe o no es válido");
-        return;
+        return catalogoActual;
     }
     //Pedir cantidad
     const eleccionCantidad = prompt("Introduce la cantidad que desea comprar: ");
@@ -24,11 +24,11 @@ function registrarVenta(catalogoActual){
     if (Number.isNaN(cantidad) || cantidad <= 0) {
 
         console.log("Debe introducir una cantidad válida mayor a cero");
-        return;
+        return catalogoActual;
 
     } else if(cantidad > producto.stock){
         console.log("El producto elegido no dispone de tanto stock");
-        return;
+        return catalogoActual;
     }
     //calculamos el precio con los descuentos
     const precioEstado = estadoProducto(producto.estadoConservacion, producto.precioBase);

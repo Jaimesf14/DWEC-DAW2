@@ -1,11 +1,10 @@
-import { estadoProducto, descuentoVolumen, stockBajo } from "./reglaNegocios";
 import { verCatalogo } from "./verCatalogo";
 import { buscarProducto } from "./gestionProductos";
 
 function reponerStock(catalogoActual){
     verCatalogo();
     //Pedir id
-    const eleccionId = prompt("Introduce el id del juego que quieres comprar: ");
+    const eleccionId = prompt("Introduce el id del juego que quieres reponer stock: ");
     if(eleccionId === null) return;
     const id = Number(eleccionId);
 
@@ -13,10 +12,10 @@ function reponerStock(catalogoActual){
     const producto = buscarProducto(id);
     if (!producto || Number.isNaN(id)) {
         console.log("El id seleccionado no existe o no es válido");
-        return;
+        return catalogoActual;
     }
     //Pedir cantidad
-    const eleccionCantidad = prompt("Introduce la cantidad que desea comprar: ");
+    const eleccionCantidad = prompt("Introduce la cantidad que desea reponer: ");
     if(eleccionCantidad === null) return;
     const cantidad = Number(eleccionCantidad);
 
@@ -24,12 +23,9 @@ function reponerStock(catalogoActual){
     if (Number.isNaN(cantidad) || cantidad <= 0) {
 
         console.log("Debe introducir una cantidad válida mayor a cero");
-        return;
+        return catalogoActual;
 
-    } else if(cantidad > producto.stock){
-        console.log("El producto elegido no dispone de tanto stock");
-        return;
-    }
+    } 
     //calculamos la suma de stock
     const reposicionStock = producto.stock + cantidad
 
@@ -45,14 +41,14 @@ function reponerStock(catalogoActual){
         };
     });
 
-    console.log(`=== VENTA REGISTRADA ===`);
+    console.log(`=== REPOSICIÓN REGISTRADA ===`);
     console.log(`Producto: ${producto.titulo}`);
-    console.log(`Total: ${precioFinal.toFixed(2)}€`);
-    if (mensajeStock) {
-        console.log(mensajeStock)
-    }
+    console.log(`Stock anterior: ${producto.stock}`);
+    console.log(`Nuevo stock: ${reposicionStock}`);
 
     return nuevoCatalogo;
 }
+
+    
 
 export {reponerStock}
