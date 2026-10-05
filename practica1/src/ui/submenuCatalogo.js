@@ -14,7 +14,7 @@ function menuCatalogo() {
             "| 5. Salir"
         );
 
-        if (entrada === null) break; // Si presiona "Cancelar", sale del bucle
+        //if (entrada === null) break; // Si presiona "Cancelar", sale del bucle
         eleccion = parseInt(entrada);
 
         switch (eleccion) {
