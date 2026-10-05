@@ -12,7 +12,7 @@ function estadoProducto(estadoConservacion, precioBase){
  return precioBase * descuento;
 }
 
-function descuentoVolumen(cantidad, precioBase){
+function descuentoVolumen(cantidad){
     if(cantidad >= 2 && cantidad <=3){
         return 0.05;
     } else if(cantidad >= 4){

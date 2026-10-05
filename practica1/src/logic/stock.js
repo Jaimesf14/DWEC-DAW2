@@ -2,7 +2,7 @@ import { estadoProducto, descuentoVolumen, stockBajo } from "./reglaNegocios";
 import { verCatalogo } from "./verCatalogo";
 import { buscarProducto } from "./gestionProductos";
 
-function registrarVenta(catalogoActual){
+function reponerStock(catalogoActual){
     verCatalogo();
     //Pedir id
     const eleccionId = prompt("Introduce el id del juego que quieres comprar: ");
@@ -30,14 +30,8 @@ function registrarVenta(catalogoActual){
         console.log("El producto elegido no dispone de tanto stock");
         return;
     }
-    //calculamos el precio con los descuentos
-    const precioEstado = estadoProducto(producto.estadoConservacion, producto.precioBase);
-    const precioCantidad = precioEstado * cantidad;
-    const descuentoCantidad = descuentoVolumen(cantidad);
-    const precioFinal = precioCantidad * ( 1-descuentoCantidad);
-
-    const stockTrasCompra = producto.stock - cantidad;
-    const mensajeStock = stockBajo(stockTrasCompra);
+    //calculamos la suma de stock
+    const reposicionStock = producto.stock + cantidad
 
     //actualizar catalogo
     const nuevoCatalogo = catalogoActual.map(producto =>{
@@ -47,7 +41,7 @@ function registrarVenta(catalogoActual){
 
         return {
             ...producto,
-            stock: stockTrasCompra
+            stock: reposicionStock
         };
     });
 
@@ -61,4 +55,4 @@ function registrarVenta(catalogoActual){
     return nuevoCatalogo;
 }
 
-export {registrarVenta}
+export {reponerStock}

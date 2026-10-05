@@ -1,14 +1,13 @@
 import {catalogo} from "../model/catalogo";
 
-function buscarProducto(){
-    console.log(`BUSQUEDA DE PRODUCTO`);
-    const productoSeleccionado = catalogo.find((producto) => producto.id === 3);
+function buscarProducto(id){
+    const productoSeleccionado = catalogo.find((producto) => producto.id === id);
     if(productoSeleccionado !== undefined){
-        console.log(`El producto buscado es ${productoSeleccionado.titulo}`);
+        return productoSeleccionado;
     } else {
         console.log(`Id no valida`);
+        return null;
     }
-    console.log(`-------------------------------------------------------------------------------------------------------------------`);
      
     
 }
