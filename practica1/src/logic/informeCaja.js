@@ -1,5 +1,6 @@
 import { registrarVenta } from "./venta"
 let precioTotal = 0;
+let registrosVentas = [];
 
 function sumaPrecio(precioFinal){
     precioTotal += precioFinal;

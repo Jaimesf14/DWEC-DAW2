@@ -2,6 +2,9 @@ import { estadoProducto, descuentoVolumen, stockBajo } from "./reglaNegocios";
 import { verCatalogo } from "./verCatalogo";
 import { buscarProducto } from "./gestionProductos";
 import { sumaPrecio } from "./informeCaja"
+//array necesario para informeventas, que es donde se va a guardar la cantidad de juegos vendidos
+let registroJuegosVendidos = [];
+
 
 function registrarVenta(catalogoActual){
     verCatalogo();
@@ -42,6 +45,16 @@ function registrarVenta(catalogoActual){
 
     //Para ir sumando el precio de toda las ventas para informe caja
     sumaPrecio(precioFinal);
+
+    
+    registroJuegosVendidos.push(
+        producto.id,
+        producto.titulo,
+        cantidad
+    );
+        
+
+    }
     
     //actualizar catalogo
     const nuevoCatalogo = catalogoActual.map(producto =>{
