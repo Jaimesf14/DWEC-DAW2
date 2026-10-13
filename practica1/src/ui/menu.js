@@ -3,6 +3,7 @@ import { registrarVenta } from "../logic/venta";
 import { reponerStock } from "../logic/stock";
 import { buscarProducto } from "../logic/gestionProductos";
 import { catalogo } from "../model/catalogo";
+import { informeCaja } from "../logic/informeCaja";
 function menu() {
     let eleccion;
 
@@ -14,7 +15,8 @@ function menu() {
             "| 2. Buscar producto\n" +
             "| 3. Registrar venta\n" +
             "| 4. Reponer Stock\n" +
-            "| 5. Salir"
+            "| 5. Informe de caja\n" +
+            "| 6. Salir"
         );
 
         //if (entrada === null) break; // Si presiona "Cancelar", sale del bucle
@@ -39,13 +41,16 @@ function menu() {
                 catalogoActual2 = reponerStock(catalogoActual2);
                 break;
             case 5:
+                let catalogoActual3 = catalogo;
+                informeCaja();
+            case 6:
                 break;
             default:
                 alert("Opción no válida");
                 break;
         }
 
-    } while (eleccion !== 5);
+    } while (eleccion !== 6);
 }
 
 

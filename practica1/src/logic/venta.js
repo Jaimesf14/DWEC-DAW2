@@ -1,6 +1,7 @@
 import { estadoProducto, descuentoVolumen, stockBajo } from "./reglaNegocios";
 import { verCatalogo } from "./verCatalogo";
 import { buscarProducto } from "./gestionProductos";
+import { sumaPrecio } from "./informeCaja"
 
 function registrarVenta(catalogoActual){
     verCatalogo();
@@ -24,7 +25,7 @@ function registrarVenta(catalogoActual){
     if (Number.isNaN(cantidad) || cantidad <= 0) {
 
         console.log("Debe introducir una cantidad válida mayor a cero");
-        return catalogoActual;
+        return catalogoActual; 
 
     } else if(cantidad > producto.stock){
         console.log("El producto elegido no dispone de tanto stock");
@@ -39,6 +40,9 @@ function registrarVenta(catalogoActual){
     const stockTrasCompra = producto.stock - cantidad;
     const mensajeStock = stockBajo(stockTrasCompra);
 
+    //Para ir sumando el precio de toda las ventas para informe caja
+    sumaPrecio(precioFinal);
+    
     //actualizar catalogo
     const nuevoCatalogo = catalogoActual.map(producto =>{
         if(producto.id !== id) {
