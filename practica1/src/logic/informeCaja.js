@@ -1,6 +1,5 @@
-import { registrarVenta } from "./venta"
+import { juegoMasVendido } from "./venta";
 let precioTotal = 0;
-let registrosVentas = [];
 
 function sumaPrecio(precioFinal){
     precioTotal += precioFinal;
@@ -10,7 +9,10 @@ function sumaPrecio(precioFinal){
 }
 function informeCaja(){
     console.log(`=== INFORME CAJA ===`);
-    console.log(`Total facturado = ${precioTotal.toFixed(2)}€`)
+    console.log(`Total facturado = ${precioTotal.toFixed(2)}€`);
+    const juego = juegoMasVendido();
+    console.log(`Juego más vendido = ${juego.titulo} | Cantidad vendida = ${juego.cantidad}`)
+
 }
 
 export {sumaPrecio, informeCaja}

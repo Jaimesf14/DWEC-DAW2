@@ -46,15 +46,38 @@ function registrarVenta(catalogoActual){
     //Para ir sumando el precio de toda las ventas para informe caja
     sumaPrecio(precioFinal);
 
-    
-    registroJuegosVendidos.push(
-        producto.id,
-        producto.titulo,
-        cantidad
+    //Si es igual devuelve true por el some
+    const juegoExiste = registroJuegosVendidos.some( 
+        j => j.id === producto.id
     );
-        
 
+    //Para saber cual es el juego mas vendido
+    const arrayAux = [];
+    if(juegoExiste === true){
+        for(const j of registroJuegosVendidos){
+            if(j.titulo === producto.titulo){
+                arrayAux.push({
+                    ...j,
+                    cantidad: j.cantidad + cantidad
+                });
+            } else {
+                arrayAux.push(j);
+            }
+        }
+        registroJuegosVendidos = arrayAux;
+
+    } else {
+        registroJuegosVendidos.push({
+            id: producto.id,
+            titulo: producto.titulo,
+            cantidad: cantidad
+        });
     }
+    
+    
+
+    
+        
     
     //actualizar catalogo
     const nuevoCatalogo = catalogoActual.map(producto =>{
@@ -78,4 +101,23 @@ function registrarVenta(catalogoActual){
     return nuevoCatalogo;
 }
 
-export {registrarVenta}
+function juegoMasVendido(){
+    let juegoExitoso= " ";
+    let cantidadExitosa = 0;
+    registroJuegosVendidos.forEach(j => {
+        if(j.cantidad > cantidadExitosa){
+            juegoExitoso = j.titulo;
+            cantidadExitosa = j.cantidad;
+        } 
+    });
+
+    if(registroJuegosVendidos.length === 0){
+        return null;
+    }
+    return {
+        titulo: juegoExitoso,
+        cantidad: cantidadExitosa
+    }  
+}
+
+export {registrarVenta, juegoMasVendido}
