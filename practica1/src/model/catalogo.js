@@ -13,6 +13,8 @@ const catalogo = [
     {id: 12, titulo: "The Legend of Zelda: Link's Awakening", plataforma: "GAME BOY", categoria: "Aventura", precioBase:38, estadoConservacion: "nuevo-precintado", stock: 5 },
     {id: 13, titulo: "Chrono Trigger", plataforma: "SNES", categoria: "RPG", precioBase:45, estadoConservacion: "usado-como-nuevo", stock: 4 },
     {id: 14, titulo: "Streets of Rage 2", plataforma: "MEGA DRIVE", categoria: "Lucha", precioBase:60, estadoConservacion: "nuevo-precintado", stock: 10 },
+    {id: 15, titulo: "New Mario Bros", plataforma: "GAME BOY", categoria: "Plataformas", precioBase:50, estadoConservacion: "nuevo-precintado", stock: 8 }
+
 
 
 ];

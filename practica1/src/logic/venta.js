@@ -35,6 +35,22 @@ function registrarVenta(catalogoActual){
         return catalogoActual;
     }
     //calculamos el precio con los descuentos
+
+
+    //si quieres solo la caja
+    
+    const eleccionEstado = prompt("Elige el estado que quieres: \n" +
+        `1. ${producto.estadoConservacion}.\n` +
+        `2. Solo la caja.`);
+    if(eleccionEstado === null) return;
+    const estado = Number(eleccionEstado);
+
+    if(estado === 2){
+        producto.estadoConservacion = "solo-caja";
+        console.log("Se ha aplicado un 40% de descuento");
+    } 
+
+
     const precioEstado = estadoProducto(producto.estadoConservacion, producto.precioBase);
     const precioCantidad = precioEstado * cantidad;
     const descuentoCantidad = descuentoVolumen(cantidad);
@@ -129,3 +145,9 @@ function juegoMasVendido(){
 }
 
 export {registrarVenta, juegoMasVendido, sumatorioStock}
+
+
+
+/*
+estado nuevo solo caja que baja el precio un 40 por ciento y haz un producto que lo use sin modificar el catalogo original
+*/

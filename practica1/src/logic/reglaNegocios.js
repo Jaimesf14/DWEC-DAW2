@@ -8,7 +8,10 @@ function estadoProducto(estadoConservacion, precioBase){
         descuento = 0.85;
     } else if(estadoConservacion === "solo-cartucho"){
         descuento = 0.70;
+    } else if(estadoConservacion === "solo-caja"){
+        descuento = 0.60;
     }
+
  return precioBase * descuento;
 }
 
