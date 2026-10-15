@@ -38,20 +38,20 @@ function registrarVenta(catalogoActual){
 
 
     //si quieres solo la caja
-    
+    let estadoDeConservacion = producto.estadoConservacion;
     const eleccionEstado = prompt("Elige el estado que quieres: \n" +
-        `1. ${producto.estadoConservacion}.\n` +
+        `1. ${estadoDeConservacion}.\n` +
         `2. Solo la caja.`);
     if(eleccionEstado === null) return;
     const estado = Number(eleccionEstado);
 
     if(estado === 2){
-        producto.estadoConservacion = "solo-caja";
+        estadoDeConservacion = "solo-caja";
         console.log("Se ha aplicado un 40% de descuento");
     } 
 
 
-    const precioEstado = estadoProducto(producto.estadoConservacion, producto.precioBase);
+    const precioEstado = estadoProducto(estadoDeConservacion, producto.precioBase);
     const precioCantidad = precioEstado * cantidad;
     const descuentoCantidad = descuentoVolumen(cantidad);
     const precioFinal = precioCantidad * ( 1-descuentoCantidad);

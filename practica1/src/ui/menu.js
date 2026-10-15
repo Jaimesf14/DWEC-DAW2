@@ -26,21 +26,32 @@ function menu() {
         switch (eleccion) {
             case 1:
                 menuCatalogo();
+                console.log(`-------------------------------------------------------------------------------------------------------------------`);
                 break;
+
             case 2:
                 const eleccionId = prompt("Introduce el id del juego que quieres comprar: ");
                 if(eleccionId === null) return;
                 const id = Number(eleccionId);
                 buscarProducto(id);
+                console.log(`-------------------------------------------------------------------------------------------------------------------`);
                 break;
+
             case 3:
                 catalogoActual = registrarVenta(catalogoActual);
+                console.log(`-------------------------------------------------------------------------------------------------------------------`);
                 break;
+
             case 4:
                 catalogoActual = reponerStock(catalogoActual);
+                console.log(`-------------------------------------------------------------------------------------------------------------------`);
                 break;
+
             case 5:
                 informeCaja(catalogoActual);
+                console.log(`-------------------------------------------------------------------------------------------------------------------`);
+                break;
+                
             case 6:
                 break;
             default:
