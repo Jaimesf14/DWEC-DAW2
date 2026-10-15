@@ -2,9 +2,9 @@ import { estadoProducto, descuentoVolumen, stockBajo } from "./reglaNegocios";
 import { verCatalogo } from "./verCatalogo";
 import { buscarProducto } from "./gestionProductos";
 import { sumaPrecio } from "./informeCaja"
+import { catalogo } from "../model/catalogo";
 //array necesario para informeventas, que es donde se va a guardar la cantidad de juegos vendidos
 let registroJuegosVendidos = [];
-
 
 function registrarVenta(catalogoActual){
     verCatalogo();
@@ -73,10 +73,6 @@ function registrarVenta(catalogoActual){
             cantidad: cantidad
         });
     }
-    
-    
-
-    
         
     
     //actualizar catalogo
@@ -98,9 +94,21 @@ function registrarVenta(catalogoActual){
         console.log(mensajeStock)
     }
 
+
     return nuevoCatalogo;
 }
 
+
+//precio total del stock
+function sumatorioStock(catalogoActual){
+    let total = catalogoActual.reduce((suma, producto) => {
+        return suma + (producto.stock*producto.precioBase)
+    }, 0);
+
+    return total;
+}
+
+//Calcular el juego más vendido
 function juegoMasVendido(){
     let juegoExitoso= " ";
     let cantidadExitosa = 0;
@@ -120,4 +128,4 @@ function juegoMasVendido(){
     }  
 }
 
-export {registrarVenta, juegoMasVendido}
+export {registrarVenta, juegoMasVendido, sumatorioStock}

@@ -64,7 +64,7 @@ function filtrarCategoria() {
 }
 
 function filtrarPorStockBajo() {
-    const stockBajo = catalogo.filter((juego) => juego.stock <= 5); 
+    const stockBajo = catalogo.filter((juego) => juego.stock <= 3); 
     console.log(`CATÁLOGO FILTRADO POR STOCK BAJO`);
     stockBajo.forEach(juego => {
         console.log(`Id: ${juego.id} | Nombre: ${juego.titulo} | Stock: ${juego.stock}`);

@@ -4,6 +4,7 @@ import { reponerStock } from "../logic/stock";
 import { buscarProducto } from "../logic/gestionProductos";
 import { catalogo } from "../model/catalogo";
 import { informeCaja } from "../logic/informeCaja";
+let catalogoActual = catalogo;
 function menu() {
     let eleccion;
 
@@ -33,16 +34,13 @@ function menu() {
                 buscarProducto(id);
                 break;
             case 3:
-                let catalogoActual = catalogo;
                 catalogoActual = registrarVenta(catalogoActual);
                 break;
             case 4:
-                let catalogoActual2 = catalogo;
-                catalogoActual2 = reponerStock(catalogoActual2);
+                catalogoActual = reponerStock(catalogoActual);
                 break;
             case 5:
-                let catalogoActual3 = catalogo;
-                informeCaja();
+                informeCaja(catalogoActual);
             case 6:
                 break;
             default:
