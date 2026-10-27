@@ -20,12 +20,14 @@ export function crearLibro(titulo, autor, paginas) {
 // 🪜 1 · Devuelve el valor de la propiedad cuyo nombre está en `clave`.
 //        leerPropiedad({ a: 1, "b c": 2 }, "b c") → 2      (pista: con punto no se puede; con corchetes, sí)
 export function leerPropiedad(objeto, clave) {
+  return objeto[clave];
   throw new Error("Sin hacer");
 }
 
 // 🪜 2 · ¿Tiene el objeto esa propiedad COMO PROPIA (no heredada)?
 //        tienePropia({ a: 1 }, "a") → true · tienePropia({ a: 1 }, "toString") → false
 export function tienePropia(objeto, clave) {
+  return Object.hasOwn(objeto, clave);
   throw new Error("Sin hacer");
 }
 
@@ -33,12 +35,25 @@ export function tienePropia(objeto, clave) {
 // ✍️ 1 · Devuelve un libro NUEVO igual que el que te pasan, pero con prestado: true.
 //        El original NO puede cambiar (el comprobador te lo pasa congelado).
 export function marcarPrestado(libro) {
+  const libroNuevo = {...libro, prestado: true};
+  return libroNuevo;
   throw new Error("Sin hacer");
 }
 
 // ✍️ 2 · Cuenta cuántos libros hay de cada autor.
 //        contarPorAutor([{ autor: "Ende" }, { autor: "Tolkien" }, { autor: "Ende" }]) → { Ende: 2, Tolkien: 1 }
 export function contarPorAutor(libros) {
+  const resultado = {};
+  for (const libro of libros) {
+    const autor = libro.autor;
+    if (Object.hasOwn(resultado, autor)){
+      resultado[autor]++;
+    } else {
+      resultado[autor] = 1;
+    }
+    
+  }
+  return resultado;
   throw new Error("Sin hacer");
 }
 
