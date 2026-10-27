@@ -61,6 +61,8 @@ export function contarPorAutor(libros) {
 //        socio = { nombre: "Ana", direccion: { ciudad: "Cádiz" }, prestamos: ["111"] }
 //        Cuidado: { ...socio } no basta. ¿Por qué? (predicción p3)
 export function copiaProfunda(socio) {
+  const copiaSocio = {...socio, direccion: {...socio.direccion}, prestamos: [...socio.prestamos]};
+  return copiaSocio;
   throw new Error("Sin hacer");
 }
 
@@ -68,5 +70,6 @@ export function copiaProfunda(socio) {
 //        ficha(crearLibro("Momo", "Ende", 300)) → "titulo: Momo · autor: Ende · paginas: 300 · prestado: false"
 //        (pista: Object.entries + filter + map + join)
 export function ficha(libro) {
+  return Object.entries(libro).filter(([clave, valor]) => typeof valor !== "function").map(([clave, valor]) => `${clave}: ${valor}`).join(" · ");
   throw new Error("Sin hacer");
 }
