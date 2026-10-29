@@ -1,7 +1,7 @@
 // 🔮 PREDICCIONES · Escribe lo que crees que da cada expresión ANTES de probarla.
 // Cambia cada undefined por tu respuesta (un número, true/false o un texto entre comillas).
-// Luego: ./bateria.sh comprobar 1  → te dice el PORQUÉ de las que aciertas y una pista de las que fallas.
-// Para probar una expresión de verdad: ./bateria.sh probar "const a = { n: 1 }; const b = a; b.n = 2; a.n"
+// Luego: docker compose run --rm web npm run comprobar 1  → te dice el PORQUÉ de las que aciertas y una pista de las que fallas.
+// Para probar una expresión de verdad: docker compose run --rm web npm run probar "const a = { n: 1 }; const b = a; b.n = 2; a.n"
 export const predicciones = {
   p1: 2, // const a = { n: 1 }; const b = a; b.n = 2; a.n
   p2: 1, // const a = { n: 1 }; const b = { ...a }; b.n = 2; a.n

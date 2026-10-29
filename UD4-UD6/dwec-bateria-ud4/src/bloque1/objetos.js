@@ -1,6 +1,6 @@
 // Bloque 1 · Objetos literales, this, referencias y copias
 // Explicación: web de DWEC → UD4 · 4.1 Batería de ejercicios → Bloque 1 (y los apartados 2–5 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 1
+// Comprueba con:  docker compose run --rm web npm run comprobar 1
 
 // 👀 EJEMPLO RESUELTO ─────────────────────────────────────────────────────────
 // Un libro como objeto literal. El método resumen() usa this: «el objeto con el que se llama».

@@ -1,6 +1,6 @@
 // Bloque 2 · Prototipos: lo que hay debajo de class
 // Explicación: web → 4.1 Batería → Bloque 2 (y el apartado 6 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 2
+// Comprueba con:  docker compose run --rm web npm run comprobar 2
 
 // 👀 EJEMPLO RESUELTO ─────────────────────────────────────────────────────────
 // La forma clásica: una función constructora + el método en su prototype (UNA vez para todos).
