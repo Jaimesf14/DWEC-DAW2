@@ -23,7 +23,7 @@ export class Punto {
     this.x = x;
     this.y = y;
   }
-  distaciaAlOrigen(){
+  distanciaAlOrigen(){
     return Math.hypot(this.x, this.y)
   }
 }
@@ -42,23 +42,40 @@ export class Punto {
 export class Libro {
   #paginas;
   constructor(titulo, autor, paginas) {
-    if (typeof titulo !== "string" || titulo.trim() === " ") throw new Error("El titulo no puede estar vacio")
-    this.titulo = titulo;
+    if (typeof titulo !== "string" || titulo.trim() === "") throw new Error("El titulo no puede estar vacio")
+    this.titulo = titulo.trim();
     this.autor = autor;
     this.paginas = paginas;
-    throw new Error("Sin hacer");
+    Libro.#contador++;
   }
   get paginas(){
     return this.#paginas;
   }
   set paginas(n){
-    if(Number.isInteger(n) && n > 0) throw new Error("Las paginas tienen que ser numeros enteros y mayor a 0");
+    if(!Number.isInteger(n) || n <= 0) throw new Error("Las paginas tienen que ser numeros enteros y mayor a 0");
     this.#paginas = n;
+  }
+  get esLargo(){
+    return this.#paginas >= 400;
+  }
+
+  resumen (){
+    return `${this.titulo} (${this.autor}), ${this.#paginas} págs.`;
+  }
+
+  static #contador = 0;
+
+  static get creados(){
+    return Libro.#contador;
+  }
+
+  static desde({titulo, autor, paginas}){
+    return new Libro(titulo, autor, paginas);
   }
 }
 
 // ✍️ 3 · Devuelve una FUNCIÓN que, al llamarla suelta (avisar()), devuelva libro.resumen().
 //        Si devuelves libro.resumen tal cual, se pierde this. ¿Cómo lo evitas? (apartado 7.7)
 export function crearAvisador(libro) {
-  throw new Error("Sin hacer");
+  return ()=> libro.resumen();
 }
