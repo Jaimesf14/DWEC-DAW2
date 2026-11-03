@@ -11,15 +11,21 @@ export class Tablero {
   static COLUMNAS = Object.freeze(["Por hacer", "En curso", "Hecho"]);
   static VERSION_DATOS = 1; // (bloque C) si algún día cambia el formato guardado, se sube
   // Privado: #columnas, un Map nombre → Columna
-
+  #columnas = new Map();
   // ✍️ A3 ──────────────────────────────────────────────────────────────────────
   constructor(limiteEnCurso = 3) {
     // Crea las tres columnas; solo «En curso» lleva límite WIP (limiteEnCurso)
-    throw new Error("Sin hacer");
+    //añadimos al map
+    this.#columnas.set("Por hacer", new Columna("Por hacer"));
+    this.#columnas.set("En curso", new  Columna("En curso", limiteEnCurso));
+    this.#columnas.set("Hecho", new Columna("Hecho"));
   }
 
   // static desde(datos, limiteEnCurso): un Tablero con una tarea por cada objeto de datos
   //   (usa crearTarea)
+  static desde(datos, limiteEnCurso){
+    
+  }
 
   // columna(nombre): la Columna, o un Error si no existe (que el mensaje lleve el nombre)
   // get columnas: array con las tres columnas, en orden
