@@ -100,7 +100,7 @@ export class Tablero {
     //comprobar si esta llena
     const columnaDestino = this.columna(destino);
     if (columnaDestino.llena === true){
-      throw new Error(`Error: la columna ${destino} está llena`);
+      throw new ColumnaLlenaError(columnaDestino);
     }
     //quitarla tarea del origen y añadirla a la columna de destino.
     columnaOrigen.quitar(id);
