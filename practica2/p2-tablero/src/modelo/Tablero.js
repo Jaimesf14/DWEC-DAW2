@@ -97,8 +97,15 @@ export class Tablero {
     }
     //coger la columna de origen
     const columnaOrigen = this.dondeEsta(id);
-    //comprobar si esta llena
     const columnaDestino = this.columna(destino);
+    
+    if (columnaOrigen.nombre === "Hecho"){
+      throw new MovimientoNoPermitidoError(id, columnaOrigen.nombre, columnaDestino.nombre);
+    }
+    if (columnaDestino.nombre === columnaOrigen.nombre){
+      throw new MovimientoNoPermitidoError(id, columnaOrigen.nombre, columnaDestino.nombre);
+    }
+    //comprobar si esta llena
     if (columnaDestino.llena === true){
       throw new ColumnaLlenaError(columnaDestino);
     }
