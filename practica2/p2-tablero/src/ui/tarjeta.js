@@ -26,5 +26,19 @@ export function crearTarjeta(tarea, hoy = new Date()) {
 //   - Pintar dos veces NO puede duplicar: primero vacía. Pista: contenedor.replaceChildren(...)
 //   - Sin tareas: deja SOLO un <p class="vacia">Sin tareas</p>
 export function pintarLista(contenedor, tareas, hoy = new Date()) {
-  throw new Error("Sin hacer");
+  // Vacio contenedor
+  contenedor.replaceChildren();
+  if(tareas.length === 0){
+    const elemento = document.createElement("p");
+    elemento.className = "vacia";
+    elemento.textContent = "Sin tareas";
+    contenedor.append(elemento);
+    return;
+  }
+  //Recorro tareas para poder crear laa tarjetas en el contenedor por cada tarea.
+  for (const tarea of tareas){
+    const tarjeta = crearTarjeta(tarea, hoy);
+    contenedor.append(tarjeta);
+  }
+
 }
