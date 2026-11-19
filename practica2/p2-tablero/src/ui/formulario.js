@@ -24,16 +24,23 @@ export function leerFormulario(form) {
 //   - Si no lo tiene: <p> vacío y SIN aria-invalid (removeAttribute)
 //   Pista: p.dataset.errorDe es el nombre del campo (data-error-de → dataset.errorDe)
 export function mostrarErrores(form, errores) {
+  //busco los elementos que contienen el atributo data-error-de
   const parrafos= form.querySelectorAll('[data-error-de]');
+  //Recorro los parrafos
   for(const p of parrafos){
+    //Obtengo el tipo o mensaje de data -error-de
     const tipo_error = p.dataset.errorDe;
+    //obtengo el input que contenga el tipo del error
     const input_error = form.elements[tipo_error];
-    //comprueba si hay mensaje
+    //compruebo si hay mensaje
     if(errores[tipo_error]){
-      //Escribe el mensaje específico
+      //Escribo el mensaje específico
       p.textContent = errores[tipo_error];
+
+      //añado el atributo arial-invalid=true al input, que indica que el campo tiene un error
       input_error.setAttribute("aria-invalid", "true");
     } else {
+      //Si no hay mensaje dejo el parrafo vacio, y elimino del input el arial-invalid, porque si no hay mensaje, no hay errores
       p.textContent ="";
       input_error.removeAttribute("aria-invalid");
     }
