@@ -43,7 +43,16 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   //   - [data-dato="vencidas"]: las vencidas de tablero.resumen(ahora)
   //   La fecha de hoy: const ahora = hoy ?? new Date();  (los tests pasan una fija)
   function pintar() {
-    throw new Error("Sin hacer");
+    for(const columna of tablero.columnas){
+      const colum = columnas.querySelector(`[data-columna="${columna.nombre}"]`);
+      const lista = colum.querySelector(".lista");
+      const tareas_ordenadas = columna.ordenadas()
+      pintarLista(lista, tareas_ordenadas)
+      const num_tareas = tareas_ordenadas.length
+      const contador = colum.querySelector(".contador")
+    }
+    
+
   }
 
   // 👀 Resuelto: avisar("texto") enseña el aviso; avisar("") lo esconde
