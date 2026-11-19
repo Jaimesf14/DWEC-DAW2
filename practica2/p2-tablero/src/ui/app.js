@@ -43,16 +43,52 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   //   - [data-dato="vencidas"]: las vencidas de tablero.resumen(ahora)
   //   La fecha de hoy: const ahora = hoy ?? new Date();  (los tests pasan una fija)
   function pintar() {
+    const ahora = hoy ?? new Date();
+    let tareasHechas = 0;
+    let tareasTotales = 0;
     for(const columna of tablero.columnas){
       const colum = columnas.querySelector(`[data-columna="${columna.nombre}"]`);
       const lista = colum.querySelector(".lista");
-      const tareas_ordenadas = columna.ordenadas()
-      pintarLista(lista, tareas_ordenadas)
-      const num_tareas = tareas_ordenadas.length
-      const contador = colum.querySelector(".contador")
-    }
-    
+      const tareas_ordenadas = columna.ordenadas();
+      pintarLista(lista, tareas_ordenadas);
 
+      const num_tareas = tareas_ordenadas.length;
+      const contador = colum.querySelector(".contador");
+      if (columna.limiteWip !== null){
+        contador.textContent = `(${num_tareas}/${columna.limiteWip})`;
+      } else {
+        contador.textContent = `(${num_tareas})`;
+      }
+
+      tareasTotales += num_tareas; 
+      if(columna.nombre === "Hecho"){
+        tareasHechas += num_tareas;
+      }
+
+      const tarjetas = lista.querySelectorAll(".tarjeta");
+      const acciones = ACCIONES[columna.nombre];
+      for(const tarjeta of tarjetas){
+        for(const accion of acciones){
+          const boton = document.createElement("button");
+          boton.type = "button";
+          boton.dataset.accion = accion[1];
+          boton.textContent = accion[0];
+          tarjeta.append(boton);  
+        }
+      }
+
+    }
+    const porcentaje = (tareasHechas/tareasTotales)*100;
+    const progreso = resumen.querySelector(`[data-dato="progreso"]`);
+    if(tareasTotales === 0){
+      progreso.textContent = "0 %"
+    } else {
+      progreso.textContent = `${Math.round(porcentaje)} %`
+    }
+
+    const estadisticas = tablero.resumen(ahora);
+    const elementoVencidas = resumen.querySelector(`[data-dato="vencidas"]`);
+    elementoVencidas.textContent = estadisticas.vencidas;
   }
 
   // 👀 Resuelto: avisar("texto") enseña el aviso; avisar("") lo esconde
