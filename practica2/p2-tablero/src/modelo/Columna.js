@@ -60,7 +60,7 @@ export class Columna {
     if(indiceId === -1){
       throw new Error(`El id ${id} no está`);
     }
-    let tareaEliminada = this.#tareas.splice(indiceId, 1);
+    const tareaEliminada = this.#tareas.splice(indiceId, 1);
     //devuelvo 0 ya que va a ser la primera posicion(y la unica)
     return tareaEliminada[0];
   }

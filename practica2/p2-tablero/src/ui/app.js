@@ -21,7 +21,30 @@ const ACCIONES = {
 //   - cadaDias (si viene): entero mayor que 0. Si es correcto pero no hay limite, el error va
 //     en «limite»: una tarea que se repite necesita fecha límite
 export function validar(datos) {
-  throw new Error("Sin hacer");
+  //creo el objeto donde se guardaran los errores
+  const errores = {};
+  //Compruebo si titulo está vacío o supera los 80 caracteres, y cumple con una de las dos condiciones muestra un mensaje de error
+  if(datos.titulo.trim() === "" || datos.titulo.length > 80){
+    errores.titulo = "El titulo está vacío o tiene más de 80 caracteres";
+  }
+  //creo la variable validadorDias que la utilizaré luego para comprobar si cadaDia es correcto
+  let validadorDias = false
+  //Compruebo que cada dia tiene algún valor
+  if(datos.cadaDias !== undefined){
+    //Compruebo que no es de tipo entero o que es menor o igual a 1 y si cumple con una de las dos condiciones muestra un mensaje de error
+    if(!Number.isInteger(datos.cadaDias) || datos.cadaDias <= 0){
+      errores.cadaDias = "CadaDia debe ser de tipo entero o mayor a 0";
+    } else {
+      //Si pasa las validaciones anteriores, validadrDias es true.
+      validadorDias = true;
+    }
+  }
+  //Compruebo que validador dia es true y que el limite sea nulo o indefinido y si cumple, muestra un mensaje de error.
+  if(validadorDias === true && (datos.limite === null || datos.limite === undefined)){
+    errores.limite = "Una tarea que se repite necesita fecha límite";
+  }
+  //devuelvo errores
+  return errores;
 }
 
 /**
@@ -147,6 +170,27 @@ delegar(columnas, "click", 'button[data-accion]', (boton) => {
 
   // ✍️ B6 · submit de `form`: preventDefault, leerFormulario, validar y mostrarErrores. Si hay errores,
   //   no se crea nada. Si no, tablero.crearTarea(datos) (como un cambio más) y form.reset().
+  //listener al formulario para ver cuando se envia.
+  form.addEventListener("submit", (evento) => {
+    //para evitar que se recarge la pagina:
+    evento.preventDefault();
+    //Guardo los valores que se han introducido al formulario
+    const datos = leerFormulario(form);
+    //Valido los datos, y muestro los errores que se han encontrado
+    const errores = validar(datos);
+    mostrarErrores(form, errores);
+
+    //Compruebo si hay errores, y si errores es mayor a 0 me salgo.
+    if(Object.keys(errores).length > 0){
+      return;
+    }
+
+    //si no hay errores creo la tarea
+    cambiar(() => tablero.crearTarea(datos));
+    //despues de crear la tarea limpio los campos del formulario.
+    form.reset();
+  });
+
 
   pintar();
   return { pintar };
