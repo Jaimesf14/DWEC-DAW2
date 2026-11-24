@@ -36,10 +36,10 @@ export function desdeDatos(datos) {
   } else {
     fecha = null;
   }
-  //compruebo si cada dia esta defindo, y si lo esta creo Tarea recurrente con sus propiedades y cada dia y la devuelvo, y si no esta definida,creo Tarea sin cadaDias y lo devuelvo
+  //compruebo si cada dia esta defindo, y si lo esta creo Tarea recurrente con sus propiedades y cada dia y la devuelvo, y si no esta definida,creo Tarea sin cadaDias y lo devuelve
   if(cadaDias !== undefined){
-    return new TareaRecurrente(id, titulo, prioridad, fecha, cadaDias)
+    return new TareaRecurrente(titulo, prioridad, fecha, cadaDias)
   } else {
-    return new Tarea(id, titulo, prioridad, fecha)
+    return new Tarea(titulo, prioridad, fecha)
   }
 }
