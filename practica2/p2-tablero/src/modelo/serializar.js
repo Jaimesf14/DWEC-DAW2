@@ -27,5 +27,19 @@ export function aDatos(tarea) {
 // ✍️ C1 · desdeDatos(datos) → lo contrario de aDatos: TareaRecurrente si trae cadaDias, Tarea si no
 //   (cada campo a su sitio en el constructor, también el id)
 export function desdeDatos(datos) {
-  throw new Error("Sin hacer");
+  //guardo las propiedades de datos en variables
+  const {id, titulo, prioridad, limite, cadaDias} = datos;
+  let fecha = "";
+  //si existe fecha limite la convierto a Date, y si no devuelvo null
+  if(limite){
+    fecha = new Date(limite);
+  } else {
+    fecha = null;
+  }
+  //compruebo si cada dia esta defindo, y si lo esta creo Tarea recurrente con sus propiedades y cada dia y la devuelvo, y si no esta definida,creo Tarea sin cadaDias y lo devuelve
+  if(cadaDias !== undefined){
+    return new TareaRecurrente(titulo, prioridad, fecha, cadaDias)
+  } else {
+    return new Tarea(titulo, prioridad, fecha)
+  }
 }
