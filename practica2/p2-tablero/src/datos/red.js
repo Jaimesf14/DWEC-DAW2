@@ -8,5 +8,20 @@
 //   - Si todo va bien, devuelve respuesta.json()
 //   - Los errores de red (sin conexión) NO se capturan aquí: que le lleguen a quien llama
 export async function obtenerJSON(url, fetchFn = fetch) {
-  throw new Error("Sin hacer");
+  // realiza una peticion http a la url. Await espera a que acabe la peticion antes de continuar
+  const respuesta = await fetchFn(url);
+  //compruebo si respuesta no es ok, y si no lo es lanzo un error. respuesta.ststus es es codigo de estado http
+  if(!respuesta.ok){
+    throw new Error(`Error ${respuesta.status} al pedir ${url}`);
+  }
+  //compruebo el tipo de contenido que devuelve el servidor, compruebo si no existe, y si es asi tipo esta vacio
+  let tipo = respuesta.headers.get("content-type");
+  if (tipo === null){
+    tipo = "";
+  }
+  //si tipo no incluye .../json, no es json
+  if(!tipo.includes("application/json")){
+    throw new Error(`${url} no es JSON`);
+  }
+  return respuesta.json();
 }
