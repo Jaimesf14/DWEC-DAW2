@@ -35,9 +35,9 @@ export class Tablero {
   // get columnas: array con las tres columnas, en orden
   columna(nombre){
     if (this.#columnas.has(nombre) === false){
-      throw new Error(`Error:No existe ninguna columna con el nombre ${nombre}.`)
+      throw new Error(`Error:No existe ninguna columna con el nombre ${nombre}.`);
     }
-  return this.#columnas.get(nombre);
+    return this.#columnas.get(nombre);
   }
 
   get columnas(){
@@ -162,10 +162,42 @@ export class Tablero {
   // ✍️ C4 (bloque C) ────────────────────────────────────────────────────────────
   // toJSON(): { version, limiteEnCurso, columnas: { "Por hacer": [datos…], … } }
   //   JSON.stringify(tablero) lo llama solo. Sin él sale "{}": los # no se ven. Usa aDatos.
+  //convierte el tablero a JSON
+  toJSON(){
+    //creo el objeto columnas, y recorro los columnas
+    const columnas = {};
+    for (const nombre of Tablero.COLUMNAS) {
+      //obtengo las columnas, y combierto sus tareas a datos y la añado a columnas
+      const columna = this.columna(nombre);
+      columnas[nombre] = columna.ordenadas().map(aDatos);
+    }
+
+    //devuelvo los datos en formato json
+    return {
+      version: Tablero.VERSION_DATOS,
+      limiteEnCurso: this.columna("En curso").limiteWip,
+      columnas
+    };
+  }
 
   /** Lo contrario de toJSON: el MISMO tablero (columnas, ids y límite WIP). Lanza si no encaja. */
   static desdeJSON(datos) {
-    throw new Error("Sin hacer");
+    if (!datos || datos.version !== Tablero.VERSION_DATOS) {
+      throw new Error("Los datos del tablero no son válidos o es una versión incompatible");
+    }
+    //creo un tablero nuevo que conserva el limite de tareas de en curso
+    const tablero = new Tablero(datos.limiteEnCurso);
+    //recorro las columnas y obtengo las tareas de cada una
+    for (const nombre of Tablero.COLUMNAS) {
+      const tareas = datos.columnas[nombre];
+      //recorro las tareas, y añado su objeto a desdeDatos, y a cada columna añado la tarea
+      for (const objeto of tareas) {
+        const tarea = desdeDatos(objeto);
+        tablero.columna(nombre).añadir(tarea);
+      }
+    }
+
+    return tablero;
   }
 }
 

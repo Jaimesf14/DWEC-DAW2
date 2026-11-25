@@ -56,10 +56,13 @@ export class Columna {
   quitar(id){
     //pongo -1 para hacer la comprobacion de que no existe, ya que no puedo poner 0 porque es una posición
     let indiceId = -1;
+    //busco si el id de tarea coincide con el id que sse le paso
     indiceId = this.#tareas.findIndex((t)=> t.id === id);
     if(indiceId === -1){
       throw new Error(`El id ${id} no está`);
     }
+
+    //splice elimina la tarea en el indice que se le pasa
     const tareaEliminada = this.#tareas.splice(indiceId, 1);
     //devuelvo 0 ya que va a ser la primera posicion(y la unica)
     return tareaEliminada[0];
@@ -74,18 +77,23 @@ export class Columna {
   //     prioridad, el límite más cercano; las que no tienen límite, al final.
   //     Pista: [...this.#tareas].sort((a, b) => …) — ¿por qué la copia?
   ordenadas(){
+    //creo una copia del array y la ordeno
     const tareasOrdenadas = [...this.#tareas].sort((a, b)=> {
       //si tarea no son iguales ordena de prioridad mas alta a mas baja,y si son iguales compara por limite
+      //si los pesos son diferentes ordeno de mayor a menor
       if(a.peso !== b.peso){
         return b.peso - a.peso;
       } else {
+        //si a no tiene limite, la coloca después
         if(a.limite === null){
           return 1;
         }
+        //si b no tiene limite, la coloca después
         if(b.limite === null){
           return -1;
         }
       }
+      //si tienen la misma prioridad ordena por la fecha limite de la más cercana a la más lejana
       return new Date(a.limite)-(new Date(b.limite))
     })
     return tareasOrdenadas

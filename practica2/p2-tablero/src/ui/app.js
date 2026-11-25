@@ -66,17 +66,21 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   //   - [data-dato="vencidas"]: las vencidas de tablero.resumen(ahora)
   //   La fecha de hoy: const ahora = hoy ?? new Date();  (los tests pasan una fija)
   function pintar() {
+    //utilizo la fecha recibida o la actual y se no se indica ninguna
     const ahora = hoy ?? new Date();
     let tareasHechas = 0;
     let tareasTotales = 0;
     for(const columna of tablero.columnas){
+      //busco la columna y la lista en el html
       const colum = columnas.querySelector(`[data-columna="${columna.nombre}"]`);
       const lista = colum.querySelector(".lista");
       const tareas_ordenadas = columna.ordenadas();
+      //pinta las tarea dentro de la lista
       pintarLista(lista, tareas_ordenadas);
 
       const num_tareas = tareas_ordenadas.length;
       const contador = colum.querySelector(".contador");
+      //si la tarea tiene limite, muestra las tareas actuales y el limite, y si no tiene muestra solo el numero de tareas
       if (columna.limiteWip !== null){
         contador.textContent = `(${num_tareas}/${columna.limiteWip})`;
       } else {
@@ -88,10 +92,12 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
         tareasHechas += num_tareas;
       }
 
+      //obtengo las tarjetas de la lista, y las acciones permitidas para la columna
       const tarjetas = lista.querySelectorAll(".tarjeta");
       const acciones = ACCIONES[columna.nombre];
       for(const tarjeta of tarjetas){
         for(const accion of acciones){
+          //creo un boton
           const boton = document.createElement("button");
           boton.type = "button";
           boton.dataset.accion = accion[1];
@@ -109,7 +115,9 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
       progreso.textContent = `${Math.round(porcentaje)} %`
     }
 
+    //obtengo las estadisticas del tablero en la fecha actual
     const estadisticas = tablero.resumen(ahora);
+    //busco el elemento de tareas vencidas, y lo muestro.
     const elementoVencidas = resumen.querySelector(`[data-dato="vencidas"]`);
     elementoVencidas.textContent = estadisticas.vencidas;
   }
