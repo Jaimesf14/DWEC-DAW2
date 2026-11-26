@@ -56,7 +56,7 @@ export class Tablero {
   crearTarea(datos){
     let tarea;
     if(Object.hasOwn(datos, "dispositivos")){
-      tarea = new TareaConDispositivos(datos.titulo, datos.prioridad, datos.limite, datos.dispositivos)
+      tarea = new TareaConDispositivos(datos.titulo, datos.prioridad, datos.limite, datos.dispositivos);
     } else if (Object.hasOwn(datos, "cadaDias")){
       tarea = new TareaRecurrente(datos.titulo, datos.prioridad, datos.limite, datos.cadaDias);
     } else {
@@ -76,7 +76,7 @@ export class Tablero {
         } 
       }
     }
-    return null
+    return null;
   }
 
   dondeEsta(id){
@@ -205,10 +205,4 @@ export class Tablero {
 }
 
 // Comprueba con:  docker compose run --rm web npm test bloque-a
-(void Columna,
-  ColumnaLlenaError,
-  MovimientoNoPermitidoError,
-  Tarea,
-  TareaRecurrente,
-  aDatos,
-  desdeDatos); // (borra esta línea cuando los uses)
+ // (borra esta línea cuando los uses)
