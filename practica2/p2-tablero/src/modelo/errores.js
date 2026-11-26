@@ -36,3 +36,11 @@ export class MovimientoNoPermitidoError extends ErrorTablero {
 
     }
 }
+
+export class PruebaFallidaError extends ErrorTablero{
+    constructor(fallidos){
+        fallidos = []
+        super(`Prueba sin superar: ${fallidos}`);
+        this.fallidos = fallidos
+    }
+}

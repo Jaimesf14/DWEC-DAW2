@@ -6,6 +6,7 @@ import { ColumnaLlenaError, MovimientoNoPermitidoError } from "./errores.js";
 import { Tarea } from "./Tarea.js";
 import { TareaRecurrente } from "./TareaRecurrente.js";
 import { aDatos, desdeDatos } from "./serializar.js";
+import { TareaConDispositivos } from "./TareaConDispositivos.js";
 
 export class Tablero {
   static COLUMNAS = Object.freeze(["Por hacer", "En curso", "Hecho"]);
@@ -54,7 +55,9 @@ export class Tablero {
   //   y pásaselo al constructor, en su orden (new Tarea(datos) NO vale: espera el título)
   crearTarea(datos){
     let tarea;
-    if (Object.hasOwn(datos, "cadaDias")){
+    if(Object.hasOwn(datos, "dispositivos")){
+      tarea = new TareaConDispositivos(datos.titulo, datos.prioridad, datos.limite, datos.dispositivos)
+    } else if (Object.hasOwn(datos, "cadaDias")){
       tarea = new TareaRecurrente(datos.titulo, datos.prioridad, datos.limite, datos.cadaDias);
     } else {
       tarea = new Tarea(datos.titulo, datos.prioridad, datos.limite);

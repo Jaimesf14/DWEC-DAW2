@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DWEC · UD5 | Apuntes DOM, eventos y formularios</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1120;--panel:#131e32;--panel2:#192741;--ink:#e9effa;--muted:#acbed6;--line:#30445f;--accent:#a5b4fc;--good:#86efac;--warn:#fcd34d;--code:#091222}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(130deg,#0b1120,#13203a 54%,#0b1120);color:var(--ink);font:16px/1.72 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}a{color:#bac6ff}a:hover{color:#fff}.layout{display:grid;grid-template-columns:265px minmax(0,960px);gap:30px;max-width:1360px;margin:0 auto;padding:24px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;border:1px solid var(--line);border-radius:18px;background:rgba(19,30,50,.94);padding:18px}.sidebar .brand{font-size:1rem;font-weight:800;letter-spacing:.04em;color:var(--accent);margin-bottom:12px}.sidebar a{display:block;padding:6px 9px;color:var(--muted);text-decoration:none;border-radius:7px;font-size:.87rem}.sidebar a:hover{background:var(--panel2);color:#fff}.content{min-width:0}.hero{border:1px solid #4758a5;background:radial-gradient(circle at 80% 0,rgba(109,92,255,.2),transparent 60%),var(--panel);padding:38px;border-radius:22px;margin-bottom:24px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:700;font-size:.79rem}.hero h1{font-size:clamp(2.1rem,4vw,3.4rem);line-height:1.16;margin:8px 0 12px}.hero p{max-width:68ch;color:var(--muted);margin:8px 0}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.tag{border:1px solid #53649a;background:#1e2d52;border-radius:99px;padding:4px 10px;font-size:.8rem}.section{background:rgba(19,30,50,.95);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin:22px 0;scroll-margin-top:18px}.section h2{margin:0 0 15px;line-height:1.3;font-size:1.65rem;color:#c6d0ff}.section h3{font-size:1.13rem;color:#d5ddff;margin:24px 0 8px}.section p{margin:10px 0}.section strong{color:#f9fbff}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.91em;color:#c4e6ff;background:#263650;border-radius:4px;padding:1px 4px}pre{white-space:pre;overflow:auto;margin:12px 0 20px;background:var(--code);color:#d5e5fa;border:1px solid #334766;border-radius:12px;padding:17px 20px;line-height:1.55;font-size:.9rem;tab-size:2}pre code{padding:0;background:transparent;color:inherit}.note{background:#1a2a4b;border-left:4px solid var(--accent);border-radius:8px;padding:12px 15px;margin:17px 0}.important{background:#31271c;border-left-color:var(--warn)}.success{background:#173328;border-left-color:var(--good)}table{border-collapse:collapse;width:100%;margin:14px 0 20px;font-size:.92rem}th,td{border-bottom:1px solid #34445c;padding:10px;text-align:left;vertical-align:top}th{color:#dbe1ff;background:#202e49}tr:nth-child(even) td{background:rgba(33,47,73,.35)}ul,ol{padding-left:23px}.exercise{border:1px dashed #6e7cb6;background:#182442;border-radius:11px;padding:14px 18px;margin-top:16px}.exercise summary{font-weight:700;cursor:pointer;color:#e5dfff}.exercise p{color:var(--muted)}.top{display:inline-block;text-decoration:none;font-size:.81rem;margin-top:12px;color:var(--accent)}footer{color:var(--muted);text-align:center;font-size:.86rem;padding:30px}.print{border:1px solid #9eacff;background:#3347a4;border-radius:8px;color:white;padding:9px 13px;cursor:pointer;margin-top:12px}@media(max-width:940px){.layout{display:block;padding:12px}.sidebar{position:relative;top:auto;max-height:none;margin-bottom:16px}.sidebar nav{columns:2}.hero{padding:25px}.section{padding:21px 17px}}@media(max-width:520px){.sidebar nav{columns:1}.section h2{font-size:1.35rem}pre{font-size:.78rem;padding:12px}table{font-size:.8rem}}@media print{*{color-scheme:light}.sidebar,.print,.top{display:none}.layout{display:block;padding:0}.hero,.section{background:white;color:black;border-color:#ccc;break-inside:avoid}.section{break-inside:auto}.hero h1,.section h2,.section h3,.section strong{color:#111}body{background:white;color:black}pre{white-space:pre-wrap;word-break:break-word;background:#f1f3f7;color:black}code{color:#333;background:#eee}footer{color:#555}}
+</style>
+</head>
+<body id="inicio">
+<div class="layout">
+<aside class="sidebar"><div class="brand">⚡ DWEC / UD5</div><nav>
+<a href="#inicio">↑ Portada</a><a href="#dom">01 · DOM y árbol</a><a href="#seleccionar">02 · Seleccionar</a><a href="#closest">03 · closest</a><a href="#dataset">04 · dataset</a><a href="#modificar">05 · Modificar HTML</a><a href="#crear">06 · Crear elementos</a><a href="#append">07 · append / replaceChildren</a><a href="#render">08 · Renderizar arrays</a><a href="#eventos">09 · addEventListener</a><a href="#target">10 · target / currentTarget</a><a href="#delegacion">11 · Delegación</a><a href="#delegar">12 · Función delegar</a><a href="#b4">13 · B4 pintar()</a><a href="#b5">14 · B5 acciones</a><a href="#errores">15 · try/catch</a><a href="#formularios">16 · B6 formularios</a><a href="#validar">17 · Validar</a><a href="#flujo">18 · Evento → modelo → render</a><a href="#chuleta">19 · Chuleta final</a><a href="#practica">20 · Preparación de examen</a>
+</nav></aside>
+<main class="content">
+<header class="hero"><div class="eyebrow">Desarrollo Web en Entorno Cliente · 2.º DAW</div><h1>Apuntes de JavaScript<br>DOM, eventos y formularios</h1><p>Guía de estudio para la Unidad Didáctica 5, conectada con la práctica P2 del tablero Kanban (B1–B6).</p><p>Explicaciones sencillas, código comentado, diagramas de flujo, errores habituales y una chuleta para repasar antes del examen.</p><div class="tags"><span class="tag">DOM nativo</span><span class="tag">Eventos</span><span class="tag">Delegación</span><span class="tag">Renderizado</span><span class="tag">FormData</span><span class="tag">Kanban</span></div><button class="print" onclick="window.print()">🖨 Imprimir / Guardar como PDF</button></header>
+<section id="dom" class="section"><h2>01 · ¿Qué es el DOM?</h2><p>El <strong>DOM</strong> es el árbol de objetos que representa tu HTML. JavaScript utiliza <code>document</code> para encontrar elementos, leerlos y modificarlos.</p><pre><code>&lt;main id="app"&gt;
+  &lt;h1&gt;Inventario RPG&lt;/h1&gt;
+  &lt;section id="inventario"&gt;
+    &lt;article class="objeto"&gt;
+      &lt;h2&gt;Espada&lt;/h2&gt;
+      &lt;button&gt;Equipar&lt;/button&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre><pre><code>document
+└── main#app
+    ├── h1
+    └── section#inventario
+        └── article.objeto
+            ├── h2
+            └── button</code></pre><table><tr><th>Propiedad</th><th>Para qué sirve</th></tr><tr><td><code>parentElement</code></td><td>Accede al elemento padre</td></tr><tr><td><code>children</code></td><td>HTMLCollection viva de elementos hijos directos</td></tr><tr><td><code>childNodes</code></td><td>NodeList de nodos hijos, incluidos textos</td></tr><tr><td><code>firstElementChild</code></td><td>Primer elemento hijo</td></tr><tr><td><code>nextElementSibling</code></td><td>Siguiente hermano que es un elemento</td></tr></table><div class="note">Para contar elementos hijos, normalmente utiliza <code>elemento.children.length</code>. Los saltos de línea y espacios pueden generar nodos de texto, que <code>childNodes</code> sí incluye.</div></section>
+<section id="seleccionar" class="section"><h2>02 · Seleccionar elementos HTML</h2><h3>querySelector()</h3><p>Busca el primer elemento que coincida con un selector CSS. <strong>Recibe</strong> un selector (<code>string</code>); <strong>devuelve</strong> un elemento o <code>null</code>.</p><pre><code>document.querySelector("#inventario");       // Por ID
+document.querySelector(".tarjeta");          // Por clase
+document.querySelector("button");            // Por etiqueta
+document.querySelector("[data-id]");         // Con atributo
+document.querySelector('[data-id="3"]');     // Atributo y valor</code></pre><h3>querySelectorAll()</h3><p>Busca todas las coincidencias y devuelve una <strong>NodeList estática</strong>.</p><pre><code>const tarjetas = document.querySelectorAll(".tarjeta");
+for (const tarjeta of tarjetas) {
+  console.log(tarjeta.textContent);
+}</code></pre><div class="note">Diferencia: <code>querySelector()</code> devuelve uno (o <code>null</code>); <code>querySelectorAll()</code> devuelve una colección. También puedes buscar <strong>dentro de un elemento</strong>: <code>columna.querySelector(".lista")</code>.</div></section>
+<section id="closest" class="section"><h2>03 · closest(): buscar hacia arriba</h2><p><code>closest(selector)</code> comprueba el propio elemento y sube por sus antepasados hasta encontrar una coincidencia. Devuelve un elemento o <code>null</code>.</p><pre><code>&lt;article class="tarjeta" data-id="7"&gt;
+  &lt;h3&gt;Estudiar JavaScript&lt;/h3&gt;
+  &lt;button data-accion="empezar"&gt;Empezar&lt;/button&gt;
+&lt;/article&gt;
+
+const boton = document.querySelector("button");
+const tarjeta = boton.closest(".tarjeta");</code></pre><pre><code>button (punto de partida)
+   │
+   └── closest(".tarjeta")
+                │
+                ▼
+         article.tarjeta</code></pre><div class="note"><strong>querySelector</strong> busca hacia abajo (descendientes); <strong>closest</strong> busca hacia arriba (él mismo y antepasados).</div></section>
+<section id="dataset" class="section"><h2>04 · dataset: leer data-*</h2><pre><code>&lt;article class="tarjeta" data-id="7"&gt;
+  &lt;button data-accion="empezar"&gt;Empezar&lt;/button&gt;
+&lt;/article&gt;
+
+const tarjeta = document.querySelector(".tarjeta");
+const idTexto = tarjeta.dataset.id;        // "7"
+const idNumero = Number(idTexto);          // 7
+const accion = tarjeta.querySelector("button").dataset.accion; // "empezar"</code></pre><table><tr><th>Atributo HTML</th><th>Propiedad JS</th></tr><tr><td><code>data-id</code></td><td><code>dataset.id</code></td></tr><tr><td><code>data-accion</code></td><td><code>dataset.accion</code></td></tr><tr><td><code>data-columna</code></td><td><code>dataset.columna</code></td></tr><tr><td><code>data-error-de</code></td><td><code>dataset.errorDe</code></td></tr></table><div class="note important"><strong>Muy importante:</strong> <code>dataset</code> entrega textos. Si la clase Tablero busca IDs numéricos con <code>===</code>, convierte: <code>Number(tarjeta.dataset.id)</code>.</div></section>
+<section id="modificar" class="section"><h2>05 · Modificar texto, clases y atributos</h2><h3>textContent</h3><pre><code>const contador = document.querySelector("#contador");
+contador.textContent = "3 tareas"; // Modifica la página
+
+// NO es lo mismo que reasignar la variable:
+// contador = 3;  (si fuera let, solo cambiaría la variable)</code></pre><h3>classList</h3><pre><code>tarjeta.classList.add("completada");
+tarjeta.classList.remove("completada");
+tarjeta.classList.toggle("completada");
+tarjeta.classList.contains("completada"); // true o false
+
+tarjeta.classList.toggle("vencida", true); // Fuerza añadir</code></pre><h3>Propiedades y atributos</h3><pre><code>boton.disabled = true;
+boton.hidden = true;
+boton.setAttribute("type", "button");
+boton.removeAttribute("disabled");
+const tipo = boton.getAttribute("type");</code></pre><div class="note important">Para mostrar texto escrito por el usuario utiliza <code>textContent</code>. No introduzcas datos no confiables directamente mediante <code>innerHTML</code>: se interpretarían como HTML y podrían crear riesgos de XSS.</div></section>
+<section id="crear" class="section"><h2>06 · Crear elementos dinámicamente</h2><p><code>document.createElement(etiqueta)</code> crea un elemento <strong>en memoria</strong>; no aparece en la página hasta que lo insertas.</p><pre><code>const article = document.createElement("article");
+article.classList.add("tarjeta");
+article.dataset.id = 7;
+
+const titulo = document.createElement("h3");
+titulo.textContent = "Estudiar JavaScript";
+
+article.append(titulo);
+
+const lista = document.querySelector(".lista");
+lista.append(article);</code></pre><pre><code>createElement("article")
+        ↓
+classList + dataset
+        ↓
+createElement("h3")
+        ↓
+article.append(titulo)
+        ↓
+lista.append(article)
+        ↓
+ APARECE EN LA PÁGINA</code></pre><p>En B4, los botones se crean así:</p><pre><code>const boton = document.createElement("button");
+boton.type = "button";
+boton.dataset.accion = "empezar";
+boton.textContent = "Empezar →";
+article.append(boton);</code></pre></section>
+<section id="append" class="section"><h2>07 · append() y replaceChildren()</h2><table><tr><th>Método</th><th>Qué hace</th></tr><tr><td><code>append(nodo)</code></td><td>Añade al final; conserva los nodos anteriores</td></tr><tr><td><code>replaceChildren()</code></td><td>Vacía todos los hijos</td></tr><tr><td><code>replaceChildren(a, b)</code></td><td>Sustituye todos los hijos por <code>a</code> y <code>b</code></td></tr><tr><td><code>remove()</code></td><td>Elimina el elemento del DOM</td></tr></table><pre><code>// Si repintas tres veces con append sin limpiar:
+// [Espada] [Poción] [Espada] [Poción] ...
+
+lista.replaceChildren(); // Limpiar
+for (const elemento of nuevosElementos) {
+  lista.append(elemento);
+}
+
+// Alternativa: un array de nodos
+lista.replaceChildren(...nuevosElementos);</code></pre><div class="note">Los tres puntos (<code>...</code>) expanden los elementos del array para pasarlos como argumentos independientes.</div></section>
+<section id="render" class="section"><h2>08 · Renderizar arrays</h2><p><strong>Renderizar</strong> es dibujar en HTML lo que contiene el modelo de datos.</p><pre><code>const tareas = [
+  { id: 1, titulo: "Estudiar JavaScript" },
+  { id: 2, titulo: "Practicar Python" },
+];
+
+function pintarTareas() {
+  const lista = document.querySelector("#lista");
+  lista.replaceChildren();
+
+  for (const tarea of tareas) {
+    const article = document.createElement("article");
+    article.classList.add("tarjeta");
+    article.dataset.id = tarea.id;
+
+    const h3 = document.createElement("h3");
+    h3.textContent = tarea.titulo;
+
+    article.append(h3);
+    lista.append(article);
+  }
+}</code></pre><p>Si modificas el array, la página no cambia sola:</p><pre><code>tareas.push({ id: 3, titulo: "Preparar examen" });
+pintarTareas(); // Ahora sí se actualiza el HTML</code></pre><pre><code>DATOS (array / modelo)
+         │
+         ▼
+       render()
+         │
+         ▼
+      PÁGINA HTML</code></pre></section>
+<section id="eventos" class="section"><h2>09 · addEventListener(): escuchar eventos</h2><pre><code>const boton = document.querySelector("#comprar");
+
+boton.addEventListener("click", () => {
+  console.log("Has pulsado el botón");
+});</code></pre><p>Recibe <strong>tipo de evento</strong> y una <strong>función manejadora</strong>.</p><pre><code>boton.addEventListener("click", comprar);   // ✅ Pasar función
+boton.addEventListener("click", comprar()); // ❌ Ejecuta ahora
+boton.addEventListener("click", () => comprar(3)); // ✅ Con argumento</code></pre><table><tr><th>Evento</th><th>Uso</th></tr><tr><td><code>click</code></td><td>Pulsación de botones</td></tr><tr><td><code>input</code></td><td>Cambio mientras escribe</td></tr><tr><td><code>change</code></td><td>Cambio confirmado</td></tr><tr><td><code>submit</code></td><td>Envío de formulario</td></tr><tr><td><code>keydown</code></td><td>Pulsación de tecla (<code>evento.key</code>)</td></tr><tr><td><code>DOMContentLoaded</code></td><td>DOM construido</td></tr></table></section>
+<section id="target" class="section"><h2>10 · event.target vs event.currentTarget</h2><pre><code>&lt;button id="comprar"&gt;
+  &lt;span&gt;Comprar&lt;/span&gt;
+&lt;/button&gt;
+
+boton.addEventListener("click", (evento) => {
+  console.log(evento.target);
+  console.log(evento.currentTarget);
+});</code></pre><pre><code>button#comprar ← currentTarget: quién escucha
+     └── span  ← target: dónde ocurrió el clic</code></pre><p>Si pulsas sobre el texto del <code>span</code>, <code>evento.target</code> puede ser el <code>span</code>, no el botón. Por eso en delegación usamos <code>closest()</code> para localizar el botón.</p></section>
+<section id="delegacion" class="section"><h2>11 · Propagación y delegación</h2><p>Los clics normalmente <strong>burbujean</strong>: viajan desde el objetivo hacia sus antepasados. Podemos escuchar muchos botones desde un solo contenedor.</p><pre><code>#columnas ← aquí ponemos un listener
+   ▲
+ .lista
+   ▲
+.tarjeta
+   ▲
+ button ← aquí pulsa el usuario</code></pre><pre><code>const inventario = document.querySelector("#inventario");
+
+inventario.addEventListener("click", (evento) => {
+  const boton = evento.target.closest("button[data-accion]");
+  if (!boton) return;
+  console.log(boton.dataset.accion);
+});</code></pre><div class="note success">Un único listener en el contenedor sirve también para botones creados después. En Kanban es esencial, porque las tarjetas se reconstruyen al repintar.</div></section>
+<section id="delegar" class="section"><h2>12 · La función delegar() de B3</h2><pre><code>export function delegar(contenedor, tipo, selector, manejador) {
+  const funcion = (evento) => {
+    const elemento = evento.target.closest(selector);
+    if (!elemento) return;
+
+    if (contenedor.contains(elemento)) {
+      manejador(elemento, evento);
+    }
+  };
+
+  contenedor.addEventListener(tipo, funcion);
+
+  return () => {
+    contenedor.removeEventListener(tipo, funcion);
+  };
+}</code></pre><table><tr><th>Parámetro</th><th>Descripción</th></tr><tr><td><code>contenedor</code></td><td>Elemento padre que escuchará</td></tr><tr><td><code>tipo</code></td><td>Evento, por ejemplo <code>"click"</code></td></tr><tr><td><code>selector</code></td><td>Qué elementos interesan</td></tr><tr><td><code>manejador</code></td><td>Función que recibe el elemento encontrado y el evento</td></tr></table><p>Devuelve una función para quitar el listener:</p><pre><code>const quitar = delegar(inventario, "click", "button[data-accion]", (boton) => {
+  console.log(boton.dataset.accion);
+});
+// ...más tarde:
+quitar();</code></pre><p><code>contains()</code> verifica que el elemento encontrado sigue dentro del contenedor; <code>removeEventListener()</code> necesita la misma referencia a la función registrada.</p></section>
+<section id="b4" class="section"><h2>13 · B4: pintar() en el Kanban</h2><p>La misión de <code>pintar()</code> es dejar la página exactamente igual que el modelo: pintar tareas ordenadas, generar botones, actualizar contadores y mostrar el resumen.</p><pre><code>pintar()
+   ├── Recorrer [data-columna]
+   │      ├── Obtener nombre con dataset.columna
+   │      ├── Consultar tablero.columna(nombre)
+   │      ├── Obtener ordenadas()
+   │      ├── pintarLista(lista, tareas, ahora)
+   │      ├── Crear botones en cada .tarjeta
+   │      └── Actualizar .contador
+   └── tablero.resumen(ahora)
+          ├── Calcular % progreso
+          └── Mostrar vencidas</code></pre><h3>El elemento HTML no es el objeto del modelo</h3><pre><code>const columna = document.querySelector('[data-columna="En curso"]');
+// columna → elemento HTML
+
+const columnaTablero = tablero.columna("En curso");
+// columnaTablero → objeto Columna del modelo
+
+const tareasOrdenadas = columnaTablero.ordenadas();
+// tareasOrdenadas → array de tareas</code></pre><h3>Contador y progreso</h3><pre><code>contador.textContent = `(${tareasOrdenadas.length})`;
+
+const progreso = total === 0
+  ? 0
+  : Math.round((hechas / total) * 100);</code></pre><div class="note important">B4 no registra listeners. <strong>Repintar cambia nodos</strong>, y los listeners de la página deben configurarse una sola vez en <code>iniciarApp()</code>.</div></section>
+<section id="b5" class="section"><h2>14 · B5: acciones y avisos</h2><p>Los botones creados por B4 tienen que hacer algo. B5 escucha el clic, identifica la acción y el ID, modifica el tablero y luego vuelve a pintar.</p><pre><code>CLIC EN «EMPEZAR»
+       │
+       ▼
+     delegar()
+       │
+       ├── boton.dataset.accion → "empezar"
+       └── boton.closest(".tarjeta").dataset.id → "3" → 3
+       │
+       ▼
+ tablero.mover(3, "En curso")
+       │
+       ├── Éxito → avisar("") → pintar() → alCambiar(tablero)
+       │
+       └── ErrorTablero → avisar(error.message)</code></pre><pre><code>delegar(columnas, "click", "button[data-accion]", (boton) => {
+  const accion = boton.dataset.accion;
+  const tarjeta = boton.closest(".tarjeta");
+  const id = Number(tarjeta.dataset.id);
+
+  try {
+    if (accion === "empezar") {
+      tablero.mover(id, "En curso");
+    } else if (accion === "volver") {
+      tablero.mover(id, "Por hacer");
+    } else if (accion === "completar") {
+      tablero.completar(id);
+    }
+
+    avisar("");
+    pintar();
+    alCambiar(tablero);
+  } catch (error) {
+    if (error instanceof ErrorTablero) {
+      avisar(error.message);
+    } else {
+      throw error;
+    }
+  }
+});</code></pre><div class="note">Este código corresponde al <strong>manejador de B5</strong> que has estudiado. Se coloca una sola vez dentro de <code>iniciarApp()</code>, nunca dentro de <code>pintar()</code>.</div></section>
+<section id="errores" class="section"><h2>15 · try/catch e instanceof</h2><pre><code>try {
+  tablero.mover(id, "En curso");
+  avisar("");
+  pintar();
+} catch (error) {
+  if (error instanceof ErrorTablero) {
+    avisar(error.message);
+  } else {
+    throw error;
+  }
+}</code></pre><p>Si <code>tablero.mover()</code> lanza una excepción, JavaScript salta al <code>catch</code> y <strong>no ejecuta <code>pintar()</code></strong> en ese recorrido.</p><table><tr><th>Situación</th><th>Acción</th></tr><tr><td>Operación correcta</td><td>Ocultar aviso, pintar, avisar del cambio</td></tr><tr><td><code>ErrorTablero</code> o subclases</td><td>Mostrar <code>error.message</code> y no repintar</td></tr><tr><td>Otro error inesperado</td><td><code>throw error</code>, para no esconder un fallo de programación</td></tr></table><p><code>instanceof ErrorTablero</code> también reconoce sus subclases, como <code>ColumnaLlenaError</code>.</p></section>
+<section id="formularios" class="section"><h2>16 · B6: submit, preventDefault y FormData</h2><pre><code>const form = document.querySelector("#form-alta");
+
+form.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  console.log("Formulario enviado sin navegación predeterminada");
+});</code></pre><p><code>submit</code> escucha el envío del formulario, incluso al pulsar Enter; <code>preventDefault()</code> evita su comportamiento normal.</p><h3>Leer valores con FormData</h3><pre><code>&lt;form id="registro"&gt;
+  &lt;input name="usuario" value="Steve"&gt;
+  &lt;input name="nivel" type="number" value="10"&gt;
+&lt;/form&gt;
+
+const datos = Object.fromEntries(new FormData(form));
+// { usuario: "Steve", nivel: "10" }
+
+datos.nivel = Number(datos.nivel);</code></pre><table><tr><th>Herramienta</th><th>Qué devuelve/hace</th></tr><tr><td><code>new FormData(form)</code></td><td>FormData con controles del formulario que participan en el envío</td></tr><tr><td><code>Object.fromEntries(...)</code></td><td>Objeto a partir de pares clave-valor (ojo con nombres repetidos)</td></tr><tr><td><code>form.elements</code></td><td>Colección de controles del formulario</td></tr><tr><td><code>form.reset()</code></td><td>Restablece valores iniciales</td></tr></table><div class="note important">Para que <code>FormData</code> recoja un campo, este necesita el atributo <code>name</code>. Los campos numéricos comunes llegan como texto, así que conviértelos cuando corresponda.</div></section>
+<section id="validar" class="section"><h2>17 · Validar y mostrar errores</h2><p>En B6, <code>validar(datos)</code> no toca el DOM: devuelve <code>{}</code> si todo está bien o un objeto como <code>{ titulo: "Obligatorio" }</code> si hay errores.</p><pre><code>const errores = validar(datos);
+mostrarErrores(form, errores);
+
+if (Object.keys(errores).length > 0) {
+  return; // No crear nada si hay errores
+}
+
+// Si es válido, crear tarea desde el modelo...</code></pre><p><code>mostrarErrores()</code> debe llamarse tanto cuando hay errores como cuando no, para limpiar los mensajes anteriores.</p><h3>Herramientas útiles</h3><pre><code>Number.isInteger(datos.cadaDias);  // Comprueba entero
+form.elements["titulo"];          // Control cuyo name es titulo
+campo.setAttribute("aria-invalid", "true");
+campo.removeAttribute("aria-invalid");
+form.reset();</code></pre><div class="note">El navegador también ofrece <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern</code>, <code>checkValidity()</code>, <code>validity</code> y <code>setCustomValidity()</code>. La validación del cliente ayuda al usuario, pero el servidor debe validar de nuevo.</div></section>
+<section id="flujo" class="section"><h2>18 · La regla de oro: EVENTO → MODELO → RENDER()</h2><pre><code>ANTES
+Modelo: tarea 3 en "Por hacer"
+HTML:   tarea 3 en "Por hacer"
+
+1. EVENTO
+   El usuario pulsa "Empezar".
+
+2. MODELO
+   tablero.mover(3, "En curso");
+
+3. RENDER
+   pintar();
+
+DESPUÉS
+Modelo: tarea 3 en "En curso"
+HTML:   tarea 3 en "En curso"</code></pre><p><strong>No muevas tarjetas manualmente en el DOM</strong> si el estado real pertenece al tablero. Cambia el modelo y repinta desde él.</p><div class="note success">Si entiendes qué parte lee el HTML, cuál cambia las clases del modelo y cuál actualiza la pantalla, estarás preparado para funciones largas como <code>pintar()</code> y manejadores como B5.</div></section>
+<section id="chuleta" class="section"><h2>19 · Chuleta rápida para el examen</h2><table><tr><th>Necesito...</th><th>Instrucción</th></tr><tr><td>Seleccionar uno</td><td><code>document.querySelector("#id")</code></td></tr><tr><td>Seleccionar varios</td><td><code>zona.querySelectorAll(".tarjeta")</code></td></tr><tr><td>Buscar antepasado</td><td><code>boton.closest(".tarjeta")</code></td></tr><tr><td>Leer acción</td><td><code>boton.dataset.accion</code></td></tr><tr><td>Leer ID numérico</td><td><code>Number(tarjeta.dataset.id)</code></td></tr><tr><td>Crear elemento</td><td><code>document.createElement("article")</code></td></tr><tr><td>Añadir clase</td><td><code>elemento.classList.add("clase")</code></td></tr><tr><td>Comprobar clase</td><td><code>elemento.classList.contains("clase")</code></td></tr><tr><td>Cambiar texto</td><td><code>elemento.textContent = "Texto"</code></td></tr><tr><td>Añadir hijo</td><td><code>padre.append(hijo)</code></td></tr><tr><td>Vaciar hijos</td><td><code>contenedor.replaceChildren()</code></td></tr><tr><td>Sustituir por array de nodos</td><td><code>contenedor.replaceChildren(...nodos)</code></td></tr><tr><td>Contar hijos</td><td><code>elemento.children.length</code></td></tr><tr><td>Escuchar clic</td><td><code>boton.addEventListener("click", funcion)</code></td></tr><tr><td>Delegación</td><td><code>delegar(contenedor, "click", selector, manejador)</code></td></tr><tr><td>Evitar envío normal</td><td><code>evento.preventDefault()</code></td></tr><tr><td>Leer formulario</td><td><code>new FormData(form)</code></td></tr><tr><td>Convertir a objeto</td><td><code>Object.fromEntries(new FormData(form))</code></td></tr><tr><td>Restablecer formulario</td><td><code>form.reset()</code></td></tr><tr><td>Hay errores</td><td><code>Object.keys(errores).length &gt; 0</code></td></tr><tr><td>Capturar errores</td><td><code>try { ... } catch (error) { ... }</code></td></tr><tr><td>Reconocer error propio</td><td><code>error instanceof ErrorTablero</code></td></tr><tr><td>Relanzar error</td><td><code>throw error</code></td></tr></table></section>
+<section id="practica" class="section"><h2>20 · Plan de preparación del examen</h2><table><tr><th>Orden</th><th>Competencia</th><th>Objetivo</th></tr><tr><td>1</td><td>createElement / append / replaceChildren</td><td>Crear y repintar tarjetas sin duplicados</td></tr><tr><td>2</td><td>querySelector / closest / dataset</td><td>Identificar tarjeta, botón y acción</td></tr><tr><td>3</td><td>for...of y bucles anidados</td><td>Recorrer columnas, tareas y acciones</td></tr><tr><td>4</td><td>delegar y propagación</td><td>Un listener para los botones</td></tr><tr><td>5</td><td>try/catch e instanceof</td><td>Gestionar errores del modelo</td></tr><tr><td>6</td><td>FormData y validación</td><td>Crear tareas desde un formulario</td></tr><tr><td>7</td><td>B4/B5/B6 integrados</td><td>Resolver una aplicación estilo examen</td></tr></table><details class="exercise"><summary>Autoevaluación 1 · ¿Qué devuelve dataset.id?</summary><p>Un texto (<code>string</code>). Si necesitas un número, utiliza <code>Number(...)</code>.</p></details><details class="exercise"><summary>Autoevaluación 2 · ¿Por qué el listener está en #columnas?</summary><p>Porque el contenedor se conserva cuando repintas; las tarjetas y sus botones se reconstruyen. La delegación funciona con los nuevos botones.</p></details><details class="exercise"><summary>Autoevaluación 3 · ¿Qué ocurre si tablero.mover() lanza ErrorTablero?</summary><p>Se salta al <code>catch</code>; se muestra el aviso y no se ejecutan las instrucciones posteriores del <code>try</code>, como <code>pintar()</code>.</p></details><details class="exercise"><summary>Autoevaluación 4 · ¿Por qué no basta con modificar solo el HTML?</summary><p>Porque el modelo seguiría teniendo los datos anteriores y el siguiente renderizado podría restaurarlos. Debes seguir <strong>evento → modelo → render</strong>.</p></details><p>Para el examen, no memorices únicamente B4 o B5: aprende a explicar qué recibe cada función, qué devuelve, de dónde sale cada dato y qué cambia después de ejecutarla.</p></section>
+<footer>Apuntes de estudio DWEC · UD5 · DOM nativo, eventos y formularios · Basados en el temario y la P2 Kanban compartidos.</footer>
+</main></div></body></html>
