@@ -52,6 +52,21 @@ export function validar(datos) {
  * pintar() solo cambia nodos, así que repintar no los duplica.
  * opciones.hoy: fecha fija para los tests · opciones.alCambiar(tablero): tras cada cambio (UD6)
  */
+const crear = (etiqueta, datos) => Object.assign(document.createElement(etiqueta), datos);
+
+function crearFormulario(tarea) {
+  const form = crear("form", { noValidate: true });
+  form.dataset.form = "posponer";
+  const etiqueta = crear("label", { textContent: `Días que se pospone «${tarea.titulo}»` });
+  etiqueta.append(crear("input", { name: "dias", type: "number", value: 1 }));
+  const error = crear("p", { className: "error" });
+  error.dataset.errorDe = "dias";
+  const enviar = crear("button", { type: "submit", textContent: "Guardar" });
+  form.append(etiqueta, error, enviar, crearBoton("Cancelar", "cancelar"));
+  return form;
+}
+
+
 export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } = {}) {
   const form = raiz.querySelector("#form-alta");
   const aviso = raiz.querySelector("#aviso");
@@ -96,6 +111,10 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
       const tarjetas = lista.querySelectorAll(".tarjeta");
       const acciones = ACCIONES[columna.nombre];
       for(const tarjeta of tarjetas){
+
+        if (columna.nombre === "Por hacer" && tablero.buscar(Number(tarjeta.dataset.id)).limite)
+          tarjeta.append(crearBoton("Posponer y empezar", "posponer"));
+
         for(const accion of acciones){
           //creo un boton
           const boton = document.createElement("button");
@@ -103,6 +122,13 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
           boton.dataset.accion = accion[1];
           boton.textContent = accion[0];
           tarjeta.append(boton);  
+        }
+        if (columna.nombre === "Por hacer" && tablero.buscar(Number(tarjeta.dataset.id)).limite){
+          const boton2 = document.createElement("button");
+          boton2.type = "button";
+          boton2.dataset.accion = "posponer";
+          boton2.textContent = "Posponer y empezar";
+          tarjeta.append(boton2);
         }
       }
 
@@ -163,6 +189,8 @@ delegar(columnas, "click", 'button[data-accion]', (boton) => {
   const id = Number(tarjeta.dataset.id);
   //obtengo la accion que el boton tiene asignada
   const accion = boton.dataset.accion;
+  //obtengo tarea
+  const tarea = tablero.buscar(Number(formulario.closest(".tarjeta").dataset.id))
 
   //si el boton tiene empezar, mueve la tarea a en curso
   if(accion === "empezar"){
@@ -173,8 +201,23 @@ delegar(columnas, "click", 'button[data-accion]', (boton) => {
     //si el boton tiene completar, completa la tarea
   } else if(accion === "completar"){
     cambiar(() => tablero.completar(id));
+  } else if(accion === "posponer"){
+    columnas.querySelector("form")?.remove();
+    crearFormulario(tarea);
+    return;
+  } else if(accion === "cancelar"){
+    return columnas.querySelector("form")?.remove();
   }
-})
+});
+
+delegar(columnas, "submit", "form", (formulario, evento) => {
+  evento.preventDefault();                                    // sin recargar la página
+  const tarea = tablero.buscar(Number(formulario.closest(".tarjeta").dataset.id));
+  const valor = formulario.elements.dias.value.trim();     // SIEMPRE un string
+  const mensaje = revisar(valor, tarea, tablero, hoy ?? new Date());
+  mostrarErrores(formulario, { dias: mensaje });          // pinta o borra el mensaje bajo el campo
+  if (mensaje === "") cambiar(() => aplicar(tablero, tarea, valor));
+});
 
   // ✍️ B6 · submit de `form`: preventDefault, leerFormulario, validar y mostrarErrores. Si hay errores,
   //   no se crea nada. Si no, tablero.crearTarea(datos) (como un cambio más) y form.reset().
@@ -202,6 +245,25 @@ delegar(columnas, "click", 'button[data-accion]', (boton) => {
 
   pintar();
   return { pintar };
+}
+
+// Devuelve el mensaje de error, o "" si está bien
+function revisar(valor, tarea, tablero, hoy) {
+  const parrafos= form.querySelectorAll('[data-error-de="dias"]');
+  for(const p of parrafos){
+    if(!Number.isInteger(valor) && (valor < 1 && valor >30)){
+      p.textContent = "«Escribe un número entero de 1 a 30»";
+    } else if(valor < hoy){
+      p.textContent = "«Con esos días seguiría vencida»"
+    }
+  }
+  
+  return "";
+}
+
+function aplicar(tablero, tarea, valor) {
+  tablero.mover(tarea.id, "En curso");   // PRIMERO mover: si «En curso» está llena, lanza y no se ha tocado nada
+  // TU TURNO: cambia el dato de la tarea
 }
 
 (void ACCIONES, ErrorTablero, delegar, leerFormulario, mostrarErrores, pintarLista); // (borra esta línea cuando los uses)
